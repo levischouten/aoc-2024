@@ -1,13 +1,13 @@
 package day2.part1;
 
-import resources.Solver;
+import common.AbstractSolution;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Solution extends Solver {
+public class Solution extends AbstractSolution {
     public Solution() {
         super("src/day2/input");
     }

@@ -1,12 +1,12 @@
 package day1.part2;
 
-import resources.Solver;
+import common.AbstractSolution;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Solution extends Solver {
+public class Solution extends AbstractSolution {
 
     public Solution() {
         super("src/day1/input");
