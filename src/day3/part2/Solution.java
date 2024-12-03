@@ -19,20 +19,20 @@ public class Solution extends AbstractSolution {
         Pattern pattern = Pattern.compile("mul\\(\\d+,\\d+\\)|do\\(\\)|don't\\(\\)");
         Matcher matcher = pattern.matcher(input);
 
-        boolean isEnabled = true;
+        boolean canProgress = true;
 
         while (matcher.find()) {
             String match = matcher.group();
 
             switch (match) {
                 case "don't()":
-                    isEnabled = false;
+                    canProgress = false;
                     break;
                 case "do()":
-                    isEnabled = true;
+                    canProgress = true;
                     break;
                 default:
-                    if (isEnabled) {
+                    if (canProgress) {
                         total += Arrays
                                 .stream(match.split("\\D+"))
                                 .filter(s -> !s.isEmpty())
