@@ -24,22 +24,21 @@ public class Solution extends AbstractSolution {
         while (matcher.find()) {
             String match = matcher.group();
 
-            if (match.equals("don't()")) {
-                isEnabled = false;
-                continue;
-            }
-
-            if (match.equals("do()")) {
-                isEnabled = true;
-                continue;
-            }
-
-            if (isEnabled) {
-                total += Arrays
-                        .stream(match.split("\\D+"))
-                        .filter(s -> !s.isEmpty())
-                        .mapToInt(Integer::parseInt)
-                        .reduce(1, (a, b) -> a * b);
+            switch (match) {
+                case "don't()":
+                    isEnabled = false;
+                    break;
+                case "do()":
+                    isEnabled = true;
+                    break;
+                default:
+                    if (isEnabled) {
+                        total += Arrays
+                                .stream(match.split("\\D+"))
+                                .filter(s -> !s.isEmpty())
+                                .mapToInt(Integer::parseInt)
+                                .reduce(1, (a, b) -> a * b);
+                    }
             }
         }
         return total;
