@@ -11,10 +11,21 @@ public class Solution extends AbstractSolution {
         super("src/day4/input");
     }
 
-    private static final int[][] DIRECTIONS = {
-            {1, 0}, {0, 1}, {-1, 0}, {0, -1},
-            {1, 1}, {-1, -1}, {1, -1}, {-1, 1}
-    };
+    public record Direction(int x, int y) {
+    }
+
+    public record Position(int x, int y) {
+        public Position move(Direction direction) {
+            return new Position(x + direction.x(), y + direction.y());
+        }
+    }
+
+    private static final List<Direction> DIRECTIONS = List.of(
+            new Direction(1, 0), new Direction(0, 1),
+            new Direction(-1, 0), new Direction(0, -1),
+            new Direction(1, 1), new Direction(-1, -1),
+            new Direction(1, -1), new Direction(-1, 1)
+    );
 
     @Override
     public int solve() {
@@ -30,14 +41,14 @@ public class Solution extends AbstractSolution {
 
             for (int j = 0; j < row.size(); j++) {
                 if (row.get(j) == 'X') {
-                    for (int[] direction : DIRECTIONS) {
+                    for (Direction direction : DIRECTIONS) {
                         LinkedList<Character> list = new LinkedList<>();
 
                         list.add('M');
                         list.add('A');
                         list.add('S');
 
-                        if (dfs(matrix, list, direction, new int[]{j, i})) {
+                        if (dfs(matrix, list, direction, new Position(j, i))) {
                             total++;
                         }
                     }
@@ -50,27 +61,24 @@ public class Solution extends AbstractSolution {
 
     private boolean dfs(List<List<Character>> matrix,
                         LinkedList<Character> list,
-                        int[] direction,
-                        int[] position) {
+                        Direction direction,
+                        Position position) {
         if (list.isEmpty()) {
             return true;
         }
 
-        int[] newPosition = {position[0] + direction[0], position[1] + direction[1]};
+        Position newPosition = position.move(direction);
 
-        int newXPos = newPosition[0];
-        int newYPos = newPosition[1];
-
-        if (newYPos < 0 || newYPos >= matrix.size() ||
-                newXPos < 0 || newXPos >= matrix
+        if (newPosition.y() < 0 || newPosition.y() >= matrix.size() ||
+                newPosition.x() < 0 || newPosition.x() >= matrix
                 .getFirst()
                 .size()) {
             return false;
         }
 
         if (matrix
-                .get(newYPos)
-                .get(newXPos) == list.pop()) {
+                .get(newPosition.y())
+                .get(newPosition.x()) == list.pop()) {
             return dfs(matrix, list, direction, newPosition);
         }
 
