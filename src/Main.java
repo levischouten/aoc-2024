@@ -1,4 +1,4 @@
-import day6.part2.Solution;
+import day7.part2.Solution;
 
 public class Main {
     public static void main(String[] args) {
